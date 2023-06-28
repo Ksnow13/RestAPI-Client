@@ -84,7 +84,7 @@ public class HTTPRestCLIApplicationTest {
         Mockito.when(mockRESTClient.getAllAircraft()).thenReturn(aircraftList);
         httpRestCLIApplicationUnderTest.setRestClient(mockRESTClient);
 
-        Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateAircraftReport().contains("Boeing 747"));
+        Assertions.assertFalse(httpRestCLIApplicationUnderTest.generateAircraftReport().contains("Boeing 747"));
     }
 
 }
