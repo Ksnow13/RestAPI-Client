@@ -2,6 +2,7 @@ package com.keyin;
 
 import com.keyin.domain.Aircraft;
 import com.keyin.domain.Airport;
+import com.keyin.domain.City;
 import com.keyin.http.cli.HTTPRestCLIApplication;
 import com.keyin.http.client.RESTClient;
 import org.junit.jupiter.api.Assertions;
@@ -100,6 +101,39 @@ public class HTTPRestCLIApplicationTest {
 
     }
 
+    @Test
+    @DisplayName("Test City Report")
+    public void testGenerateCityReport(){
+        HTTPRestCLIApplication httpRestCLIApplicationUnderTest = new HTTPRestCLIApplication();
 
+        City city1 = new City();
+        city1.setId(1);
+        city1.setName("St. John's");
+        city1.setProvince("Newfoundland");
+        city1.setPopulation(300000);
+
+        City city2 = new City();
+        city2.setId(2);
+        city2.setName("Edmonton");
+        city2.setProvince("Alberta");
+        city2.setPopulation(3000000);
+
+        City city3 = new City();
+        city3.setId(3);
+        city3.setName("Calgary");
+        city3.setProvince("Alberta");
+        city3.setPopulation(2000000);
+
+        List<City> cityList = new ArrayList<>();
+        cityList.add(city1);
+        cityList.add(city2);
+        cityList.add(city3);
+
+        Mockito.when(mockRESTClient.getAllCity()).thenReturn(cityList);
+        httpRestCLIApplicationUnderTest.setRestClient(mockRESTClient);
+
+        Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateCityReport().contains("Calgary"));
+        Assertions.assertFalse(httpRestCLIApplicationUnderTest.generateCityReport().contains("random city name"));
+    }
 
 }
