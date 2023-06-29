@@ -294,5 +294,59 @@ public class RESTClient {
         return airportList;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+    // actions
+
+    public History getHistoryPeek(){
+        History history = new History();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/history")).build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                System.out.println("**** " + response.body() + " ****");
+            } else {
+                System.out.println("Error. Status Code: " + response.statusCode());
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            history = mapper.readValue(response.body(), new TypeReference<History>(){});
+
+        } catch (IOException | InterruptedException e ) {
+            e.printStackTrace();
+        }
+        return history;
+    }
+
+    public List<History> getAllHistory(){
+        List<History> historyList = new ArrayList<>();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/allHistory")).build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                System.out.println("**** " + response.body() + " ****");
+            } else {
+                System.out.println("Error. Status Code: " + response.statusCode());
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            historyList = mapper.readValue(response.body(), new TypeReference<List<History>>(){});
+
+        } catch (IOException | InterruptedException e ) {
+            e.printStackTrace();
+        }
+
+        return historyList;
+    }
+
+
+
 
 }
