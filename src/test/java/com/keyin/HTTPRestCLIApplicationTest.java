@@ -138,6 +138,7 @@ public class HTTPRestCLIApplicationTest {
     }
 
     @Test
+    @DisplayName("Test Passenger Report")
     public void testGeneratePassengerReport(){
         HTTPRestCLIApplication httpRestCLIApplicationUnderTest = new HTTPRestCLIApplication();
 
@@ -164,5 +165,6 @@ public class HTTPRestCLIApplicationTest {
         Assertions.assertFalse(httpRestCLIApplicationUnderTest.generatePassengerReport().contains("random name"));
 
     }
+
 
 }
