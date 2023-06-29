@@ -239,6 +239,51 @@ public class HTTPRestCLIApplication {
     //------------------------------------------------------------------------------------------------------------------
     // Actions
 
+    public String getHistoryPeekReport() {
+            History history = getRestClient().getHistoryPeek();
+
+            StringBuffer report = new StringBuffer();
+            report.append(history.getCalledMethod());
+            report.append(" - ");
+            report.append(history.getUrl());
+            report.append(" - ");
+            report.append(history.getTimestamp());
+
+            if (history.getCalledMethod() != null){
+                System.out.println("The last request made to the server");
+                System.out.println(report.toString());
+            } else {
+                System.out.println("No requests have been made to the server yet, the history stack is empty");
+            }
+            return report.toString();
+    }
+
+    public String getAllHistoryReport() {
+        List<History> historyList = getRestClient().getAllHistory();
+        StringBuffer report = new StringBuffer();
+
+        for (History history : historyList) {
+            report.append(history.getCalledMethod());
+            report.append(" - ");
+            report.append(history.getUrl());
+            report.append(" - ");
+            report.append(history.getTimestamp());
+
+            if (historyList.indexOf(history) != (historyList.size() - 1)) {
+                report.append(", ");
+            }
+        }
+
+        if (report.length() <= 0){
+            System.out.println("No requests have been made to the server yet, the history stack is empty");
+            System.out.println(report.toString());
+        } else {
+            System.out.println("All requests made to the server");
+            System.out.println(report.toString());
+        }
+        return report.toString();
+    }
+
 
 }
 

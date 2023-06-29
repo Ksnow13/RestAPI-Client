@@ -129,6 +129,14 @@ public class ClientRunner {
                 case "passengerAirport":
                     cliApp.getAirportPassengerVisitedReport(Integer.parseInt(args[1]));
                     break;
+
+                // History commands
+                case "history":
+                    cliApp.getHistoryPeekReport();
+                    break;
+                case "allHistory":
+                    cliApp.getAllHistoryReport();
+                    break;
                 default:
                     System.out.println();
                     System.out.println("** Sorry, Unknown args **");
