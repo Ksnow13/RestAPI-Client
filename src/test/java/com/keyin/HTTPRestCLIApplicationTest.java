@@ -3,6 +3,7 @@ package com.keyin;
 import com.keyin.domain.Aircraft;
 import com.keyin.domain.Airport;
 import com.keyin.domain.City;
+import com.keyin.domain.Passenger;
 import com.keyin.http.cli.HTTPRestCLIApplication;
 import com.keyin.http.client.RESTClient;
 import org.junit.jupiter.api.Assertions;
@@ -134,6 +135,34 @@ public class HTTPRestCLIApplicationTest {
 
         Assertions.assertTrue(httpRestCLIApplicationUnderTest.generateCityReport().contains("Calgary"));
         Assertions.assertFalse(httpRestCLIApplicationUnderTest.generateCityReport().contains("random city name"));
+    }
+
+    @Test
+    public void testGeneratePassengerReport(){
+        HTTPRestCLIApplication httpRestCLIApplicationUnderTest = new HTTPRestCLIApplication();
+
+        Passenger passenger1 = new Passenger();
+        passenger1.setId(1);
+        passenger1.setFirstname("Kyle");
+        passenger1.setLastName("Snow");
+        passenger1.setPhoneNumber("(709)666-4444");
+
+        Passenger passenger2 = new Passenger();
+        passenger2.setId(2);
+        passenger2.setFirstname("Ken");
+        passenger2.setLastName("Chafe");
+        passenger2.setPhoneNumber("(709)777-9073");
+
+        List<Passenger> passengerList = new ArrayList<>();
+        passengerList.add(passenger1);
+        passengerList.add(passenger2);
+
+        Mockito.when(mockRESTClient.getAllPassenger()).thenReturn(passengerList);
+        httpRestCLIApplicationUnderTest.setRestClient(mockRESTClient);
+
+        Assertions.assertTrue(httpRestCLIApplicationUnderTest.generatePassengerReport().contains("Ken"));
+        Assertions.assertFalse(httpRestCLIApplicationUnderTest.generatePassengerReport().contains("random name"));
+
     }
 
 }
