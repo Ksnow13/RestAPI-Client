@@ -284,7 +284,7 @@ public class HTTPRestCLIApplication {
         return report.toString();
     }
 
-    public String undoHistory() {
+    public String getUndoHistory() {
         History history = getRestClient().undoHistory();
 
         StringBuffer report = new StringBuffer();
@@ -303,7 +303,7 @@ public class HTTPRestCLIApplication {
         return report.toString();
     }
 
-    public String redoHistory() {
+    public String getRedoHistory() {
         History history = getRestClient().redoHistory();
 
         StringBuffer report = new StringBuffer();

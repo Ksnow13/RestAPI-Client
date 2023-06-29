@@ -138,10 +138,10 @@ public class ClientRunner {
                     cliApp.getAllHistoryReport();
                     break;
                 case "undoHistory":
-                    cliApp.undoHistory();
+                    cliApp.getUndoHistory();
                     break;
                 case "redoHistory":
-                    cliApp.redoHistory();
+                    cliApp.getRedoHistory();
                     break;
                 default:
                     System.out.println();
