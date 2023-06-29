@@ -284,6 +284,43 @@ public class HTTPRestCLIApplication {
         return report.toString();
     }
 
+    public String undoHistory() {
+        History history = getRestClient().undoHistory();
+
+        StringBuffer report = new StringBuffer();
+        report.append(history.getCalledMethod());
+        report.append(" - ");
+        report.append(history.getUrl());
+        report.append(" - ");
+        report.append(history.getTimestamp());
+
+        if (history.getCalledMethod() != null){
+            System.out.println("The last request made to the server");
+            System.out.println(report.toString());
+        } else {
+            System.out.println("cannot undo any further the history stack is empty");
+        }
+        return report.toString();
+    }
+
+    public String redoHistory() {
+        History history = getRestClient().redoHistory();
+
+        StringBuffer report = new StringBuffer();
+        report.append(history.getCalledMethod());
+        report.append(" - ");
+        report.append(history.getUrl());
+        report.append(" - ");
+        report.append(history.getTimestamp());
+
+        if (history.getCalledMethod() != null){
+            System.out.println("The last request made to the server");
+            System.out.println(report.toString());
+        } else {
+            System.out.println("cannot redo any further you reached the top of the history stack");
+        }
+        return report.toString();
+    }
 
 }
 

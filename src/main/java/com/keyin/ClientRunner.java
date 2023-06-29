@@ -137,6 +137,12 @@ public class ClientRunner {
                 case "allHistory":
                     cliApp.getAllHistoryReport();
                     break;
+                case "undoHistory":
+                    cliApp.undoHistory();
+                    break;
+                case "redoHistory":
+                    cliApp.redoHistory();
+                    break;
                 default:
                     System.out.println();
                     System.out.println("** Sorry, Unknown args **");

@@ -346,6 +346,53 @@ public class RESTClient {
         return historyList;
     }
 
+    public History undoHistory(){
+        History history = new History();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/undoHistory")).build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                System.out.println("**** " + response.body() + " ****");
+            } else {
+                System.out.println("Error. Status Code: " + response.statusCode());
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            history = mapper.readValue(response.body(), new TypeReference<History>(){});
+
+        } catch (IOException | InterruptedException e ) {
+            e.printStackTrace();
+        }
+        return history;
+    }
+
+    public History redoHistory(){
+        History history = new History();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/redoHistory")).build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                System.out.println("**** " + response.body() + " ****");
+            } else {
+                System.out.println("Error. Status Code: " + response.statusCode());
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            history = mapper.readValue(response.body(), new TypeReference<History>(){});
+
+        } catch (IOException | InterruptedException e ) {
+            e.printStackTrace();
+        }
+        return history;
+    }
 
 
 
