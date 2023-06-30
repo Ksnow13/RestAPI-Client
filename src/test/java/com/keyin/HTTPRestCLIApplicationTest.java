@@ -1,9 +1,6 @@
 package com.keyin;
 
-import com.keyin.domain.Aircraft;
-import com.keyin.domain.Airport;
-import com.keyin.domain.City;
-import com.keyin.domain.Passenger;
+import com.keyin.domain.*;
 import com.keyin.http.cli.HTTPRestCLIApplication;
 import com.keyin.http.client.RESTClient;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,6 +161,36 @@ public class HTTPRestCLIApplicationTest {
 
         Assertions.assertTrue(httpRestCLIApplicationUnderTest.generatePassengerReport().contains("Ken"));
         Assertions.assertFalse(httpRestCLIApplicationUnderTest.generatePassengerReport().contains("random name"));
+
+    }
+
+    @Test
+    public void testGenerateAllHistory(){
+        HTTPRestCLIApplication httpRestCLIApplicationUnderTest = new HTTPRestCLIApplication();
+
+        History history1 = new History();
+        history1.setCalledMethod("/getAllAirport()");
+        history1.setUrl("http://localhost:8080/airport");
+        history1.setTimestamp("2023-01-01");
+
+        History history2 = new History();
+        history2.setCalledMethod("/getAllAirport()");
+        history2.setUrl("http://localhost:8080/airport");
+        history2.setTimestamp("2023-01-01");
+
+        List<History> historyList = new ArrayList<>();
+        historyList.add(history1);
+        historyList.add(history2);
+
+        Mockito.when(mockRESTClient.getAllHistory()).thenReturn(historyList);
+        httpRestCLIApplicationUnderTest.setRestClient(mockRESTClient);
+
+        Assertions.assertTrue(httpRestCLIApplicationUnderTest.getAllHistoryReport().contains("/getAllAirport()"));
+        Assertions.assertFalse(httpRestCLIApplicationUnderTest.getAllHistoryReport().contains("random name"));
+
+
+
+
 
     }
 
